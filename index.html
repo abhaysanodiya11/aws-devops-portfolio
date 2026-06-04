@@ -1,69 +1,802 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abhay | DevOps& Engineer</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Abhay Sanodiya | DevOps Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg:        #070d1a;
+    --surface:   #0d1628;
+    --border:    #1a2540;
+    --accent:    #3b82f6;
+    --accent2:   #06b6d4;
+    --green:     #10b981;
+    --text:      #e2e8f0;
+    --muted:     #64748b;
+    --mono:      'Space Mono', monospace;
+    --sans:      'Syne', sans-serif;
+  }
 
-    <link rel="stylesheet" href="style.css">
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 1000; opacity: 0.4;
+  }
+
+  /* ── GRID BACKGROUND ── */
+  .grid-bg {
+    position: fixed; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(7,13,26,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+  .nav-logo span { color: var(--muted); }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── SECTIONS ── */
+  section { position: relative; z-index: 1; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: flex-start;
+    padding: 8rem 4rem 4rem;
+    max-width: 1100px; margin: 0 auto;
+  }
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .hero-tag::before {
+    content: '';
+    display: block; width: 2rem; height: 1px;
+    background: var(--accent);
+  }
+
+  .hero-name {
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+  .hero-name .line2 {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(59,130,246,0.5);
+  }
+
+  .hero-role {
+    font-family: var(--mono);
+    font-size: 1rem;
+    color: var(--accent2);
+    margin: 1.5rem 0 2rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .cursor {
+    display: inline-block; width: 2px; height: 1.1em;
+    background: var(--accent2);
+    animation: blink 1s step-end infinite;
+    vertical-align: middle;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .hero-desc {
+    max-width: 560px;
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    padding: 0.75rem 1.75rem;
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none; cursor: pointer;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-primary:hover { background: #2563eb; transform: translateY(-2px); }
+
+  .btn-outline {
+    padding: 0.75rem 1.75rem;
+    background: transparent;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+  /* ── STATS ROW ── */
+  .stats-row {
+    display: flex; gap: 3rem;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+  .stat-item { text-align: left; }
+  .stat-num {
+    font-size: 2rem; font-weight: 800;
+    color: var(--accent);
+    font-family: var(--mono);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-family: var(--mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 0.25rem;
+  }
+
+  /* ── PIPELINE VISUAL ── */
+  .pipeline-section {
+    padding: 5rem 4rem;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .section-header {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 3rem;
+  }
+  .section-tag {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .section-line { flex: 1; height: 1px; background: var(--border); }
+  .section-title {
+    font-size: 2rem; font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .section-sub { color: var(--muted); font-size: 0.95rem; }
+
+  /* ── SKILLS ── */
+  #skills { padding: 5rem 4rem; max-width: 1100px; margin: 0 auto; }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .skill-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .skill-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+
+  .skill-icon {
+    font-size: 1.5rem; margin-bottom: 0.75rem;
+    display: block;
+  }
+  .skill-cat {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .skill-name {
+    font-size: 1rem; font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    padding: 0.2rem 0.55rem;
+    background: rgba(59,130,246,0.08);
+    border: 1px solid rgba(59,130,246,0.2);
+    color: var(--accent2);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── PROJECTS ── */
+  #projects { padding: 5rem 4rem; max-width: 1100px; margin: 0 auto; }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 2rem 2.5rem;
+    margin-bottom: 1.5rem;
+    clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%);
+    transition: border-color 0.25s, transform 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: linear-gradient(to bottom, var(--accent), var(--accent2));
+    opacity: 0; transition: opacity 0.25s;
+  }
+  .project-card:hover { border-color: var(--accent); transform: translateX(4px); }
+  .project-card:hover::before { opacity: 1; }
+
+  .project-top {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; margin-bottom: 0.75rem;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .project-num {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+  .project-links { display: flex; gap: 0.75rem; }
+  .project-link {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .project-link:hover { border-color: var(--accent); }
+
+  .project-title {
+    font-size: 1.3rem; font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+  .project-stack {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--accent2);
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.05em;
+  }
+  .project-bullets { list-style: none; }
+  .project-bullets li {
+    color: var(--muted);
+    font-size: 0.92rem;
+    line-height: 1.7;
+    padding-left: 1.25rem;
+    position: relative;
+    margin-bottom: 0.35rem;
+  }
+  .project-bullets li::before {
+    content: '→';
+    position: absolute; left: 0;
+    color: var(--accent);
+    font-family: var(--mono);
+  }
+
+  /* ── PIPELINE DIAGRAM ── */
+  .pipeline-diagram {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    margin-top: 3rem;
+    clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%);
+  }
+  .pipeline-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .pipeline-stages {
+    display: flex; align-items: center;
+    gap: 0; flex-wrap: wrap;
+  }
+  .stage {
+    background: rgba(59,130,246,0.08);
+    border: 1px solid rgba(59,130,246,0.25);
+    padding: 0.9rem 1.2rem;
+    text-align: center;
+    min-width: 130px;
+    flex: 1;
+  }
+  .stage-icon { font-size: 1.4rem; display: block; margin-bottom: 0.4rem; }
+  .stage-name {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+  .stage-desc { font-size: 0.72rem; color: var(--muted); }
+  .stage-arrow {
+    font-family: var(--mono);
+    color: var(--accent);
+    font-size: 1.2rem;
+    padding: 0 0.5rem;
+    flex-shrink: 0;
+  }
+
+  /* ── ABOUT / CONTACT ── */
+  #contact { padding: 5rem 4rem; max-width: 1100px; margin: 0 auto; }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 3rem;
+  }
+  .contact-text { color: var(--muted); line-height: 1.9; font-size: 0.95rem; }
+  .contact-text strong { color: var(--text); }
+
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-item {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color 0.2s, transform 0.2s;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+  }
+  .contact-item:hover { border-color: var(--accent); transform: translateX(4px); }
+  .contact-icon { font-size: 1.1rem; }
+  .contact-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: block;
+  }
+  .contact-val { font-size: 0.9rem; font-weight: 600; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 4rem;
+    display: flex; justify-content: space-between; align-items: center;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .footer-text {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+  .footer-text span { color: var(--accent); }
+
+  /* ── CERT BADGE ── */
+  .cert-badge {
+    display: inline-flex; align-items: center; gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    margin-top: 1.5rem;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+    text-decoration: none;
+    transition: border-color 0.2s;
+  }
+  .cert-badge:hover { border-color: var(--green); }
+  .cert-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .cert-text {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+  .cert-text strong { color: var(--text); }
+
+  /* ── FADE IN ── */
+  .fade-in {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: none; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    #hero, #skills, #projects, #contact, .pipeline-section {
+      padding-left: 1.5rem; padding-right: 1.5rem;
+    }
+    .contact-grid { grid-template-columns: 1fr; }
+    .stats-row { gap: 1.5rem; flex-wrap: wrap; }
+    .pipeline-stages { flex-direction: column; align-items: stretch; }
+    .stage-arrow { transform: rotate(90deg); text-align: center; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
 </head>
-
 <body>
 
-    <div class="container">
+<div class="grid-bg"></div>
 
-        <header>
-            <h1>Abhay Sanodiya</h1>
-            <p> DevOps & Cloud Engineer</p>
-        </header>
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><span>~/</span>abhay.dev</div>
+  <div class="nav-links">
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
 
-        <section class="card">
-            <h2>About Me</h2>
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-tag">Available for DevOps roles</div>
+  <h1 class="hero-name">
+    Abhay<br>
+    <span class="line2">Sanodiya</span>
+  </h1>
+  <p class="hero-role">
+    <span id="typed-role">DevOps &amp; Cloud Engineer</span>
+    <span class="cursor"></span>
+  </p>
+  <p class="hero-desc">
+    I build automated pipelines that take code from a developer's laptop to a running
+    Kubernetes cluster — without anyone touching a server manually. Jenkins, Docker,
+    Kubernetes, Ansible, AWS — end to end.
+  </p>
+  <div class="hero-btns">
+    <a href="#projects" class="btn-primary">View Projects</a>
+    <a href="https://github.com/abhaysanodiya11" target="_blank" class="btn-outline">GitHub ↗</a>
+  </div>
 
-            <p>
-               <p>
-    DevOps and Cloud enthusiast with hands-on experience in cloud deployment,
-    GitHub workflows, CI/CD automation and modern infrastructure concepts.
-    This portfolio project is designed and deployed using AWS cloud services
-    including S3, CloudFront and automated deployment pipelines.
-</p>
-            </p>
-        </section>
-
-        <section class="card">
-            <h2>Skills</h2>
-
-            <div class="skills">
-                <span>AWS</span>
-                <span>Linux</span>
-                <span>jenkins</span>
-                <span>GitHub</span>
-                <span>Docker</span>
-                <span>CI/CD</span>
-            </div>
-        </section>
-
-        <section class="card">
-            <h2>Projects</h2>
-
-            <p>
-                AWS Cloud Portfolio Website with CI/CD automation and CloudFront deployment.🚀
-            </p>
-        </section>
-
-        <button onclick="showMessage()">
-            Connect With Me
-        </button>
-
-        <footer>
-            <p>Built on AWS Cloud ☁️</p>
-        </footer>
-
+  <div class="stats-row">
+    <div class="stat-item">
+      <div class="stat-num">5+</div>
+      <div class="stat-label">Core Tools</div>
     </div>
+    <div class="stat-item">
+      <div class="stat-num">2</div>
+      <div class="stat-label">Live Projects</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">1</div>
+      <div class="stat-label">Full CI/CD Pipeline</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">AWS</div>
+      <div class="stat-label">Cloud Platform</div>
+    </div>
+  </div>
+</section>
 
-    <script src="script.js"></script>
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header fade-in">
+    <span class="section-tag">// 01</span>
+    <div class="section-line"></div>
+  </div>
+  <h2 class="section-title fade-in">Technical Skills</h2>
+  <p class="section-sub fade-in">Tools I've built real things with — not just read about.</p>
 
+  <div class="skills-grid">
+    <div class="skill-card fade-in">
+      <span class="skill-icon">⚙️</span>
+      <div class="skill-cat">CI/CD</div>
+      <div class="skill-name">Pipeline Automation</div>
+      <div class="skill-tags">
+        <span class="tag">Jenkins</span>
+        <span class="tag">Declarative Pipeline</span>
+        <span class="tag">GitHub Webhooks</span>
+        <span class="tag">GitHub Actions</span>
+      </div>
+    </div>
+    <div class="skill-card fade-in">
+      <span class="skill-icon">🐳</span>
+      <div class="skill-cat">Containers</div>
+      <div class="skill-name">Docker</div>
+      <div class="skill-tags">
+        <span class="tag">Dockerfile</span>
+        <span class="tag">Docker Compose</span>
+        <span class="tag">Docker Hub</span>
+        <span class="tag">Volumes</span>
+        <span class="tag">Networking</span>
+      </div>
+    </div>
+    <div class="skill-card fade-in">
+      <span class="skill-icon">☸️</span>
+      <div class="skill-cat">Orchestration</div>
+      <div class="skill-name">Kubernetes</div>
+      <div class="skill-tags">
+        <span class="tag">Deployments</span>
+        <span class="tag">Services</span>
+        <span class="tag">Ingress</span>
+        <span class="tag">HPA</span>
+        <span class="tag">PV/PVC</span>
+        <span class="tag">ConfigMaps</span>
+        <span class="tag">Secrets</span>
+      </div>
+    </div>
+    <div class="skill-card fade-in">
+      <span class="skill-icon">📜</span>
+      <div class="skill-cat">Automation</div>
+      <div class="skill-name">Ansible</div>
+      <div class="skill-tags">
+        <span class="tag">Playbooks</span>
+        <span class="tag">Roles</span>
+        <span class="tag">Handlers</span>
+        <span class="tag">Inventory</span>
+        <span class="tag">Idempotency</span>
+      </div>
+    </div>
+    <div class="skill-card fade-in">
+      <span class="skill-icon">☁️</span>
+      <div class="skill-cat">Cloud</div>
+      <div class="skill-name">AWS</div>
+      <div class="skill-tags">
+        <span class="tag">EC2</span>
+        <span class="tag">S3</span>
+        <span class="tag">CloudFront</span>
+        <span class="tag">IAM</span>
+        <span class="tag">VPC</span>
+        <span class="tag">ELB</span>
+      </div>
+    </div>
+    <div class="skill-card fade-in">
+      <span class="skill-icon">🐧</span>
+      <div class="skill-cat">Scripting & OS</div>
+      <div class="skill-name">Linux & Bash</div>
+      <div class="skill-tags">
+        <span class="tag">Ubuntu</span>
+        <span class="tag">Bash Scripting</span>
+        <span class="tag">Shell Automation</span>
+        <span class="tag">Python Basics</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header fade-in">
+    <span class="section-tag">// 02</span>
+    <div class="section-line"></div>
+  </div>
+  <h2 class="section-title fade-in">Projects</h2>
+  <p class="section-sub fade-in">Things I built end-to-end.</p>
+
+  <!-- Project 1 -->
+  <div class="project-card fade-in" style="margin-top:2rem">
+    <div class="project-top">
+      <span class="project-num">PROJECT_01</span>
+      <div class="project-links">
+        <a href="https://github.com/abhaysanodiya11" target="_blank" class="project-link">GitHub ↗</a>
+      </div>
+    </div>
+    <h3 class="project-title">CI/CD Pipeline — Flask App Deployment</h3>
+    <p class="project-stack">Jenkins · Docker · Kubernetes · GitHub Webhooks · Docker Hub</p>
+    <ul class="project-bullets">
+      <li>Built a fully automated 4-stage Jenkins pipeline triggered on every GitHub push via webhook — zero manual intervention from code push to live deployment.</li>
+      <li>Stage flow: SCM clone → Docker image build → push to Docker Hub → deploy on Kubernetes cluster.</li>
+      <li>Containerized a Flask application using a custom Dockerfile; versioned and published images to Docker Hub.</li>
+      <li>Deployed on Kubernetes using Deployments and Services with rolling updates ensuring zero-downtime releases.</li>
+      <li>Configured GitHub Webhooks with ngrok for local Jenkins trigger — simulating production-grade event-driven automation.</li>
+    </ul>
+  </div>
+
+  <!-- Pipeline Diagram -->
+  <div class="pipeline-diagram fade-in">
+    <div class="pipeline-label">// pipeline flow</div>
+    <div class="pipeline-stages">
+      <div class="stage">
+        <span class="stage-icon">📦</span>
+        <span class="stage-name">Stage 1</span>
+        <span style="font-size:0.8rem;color:#e2e8f0;font-weight:700;display:block;margin-bottom:0.2rem">Clone</span>
+        <span class="stage-desc">Pull code from GitHub via SCM</span>
+      </div>
+      <div class="stage-arrow">→</div>
+      <div class="stage">
+        <span class="stage-icon">🐳</span>
+        <span class="stage-name">Stage 2</span>
+        <span style="font-size:0.8rem;color:#e2e8f0;font-weight:700;display:block;margin-bottom:0.2rem">Build</span>
+        <span class="stage-desc">Build Docker image from Dockerfile</span>
+      </div>
+      <div class="stage-arrow">→</div>
+      <div class="stage">
+        <span class="stage-icon">☁️</span>
+        <span class="stage-name">Stage 3</span>
+        <span style="font-size:0.8rem;color:#e2e8f0;font-weight:700;display:block;margin-bottom:0.2rem">Push</span>
+        <span class="stage-desc">Push image to Docker Hub</span>
+      </div>
+      <div class="stage-arrow">→</div>
+      <div class="stage">
+        <span class="stage-icon">☸️</span>
+        <span class="stage-name">Stage 4</span>
+        <span style="font-size:0.8rem;color:#e2e8f0;font-weight:700;display:block;margin-bottom:0.2rem">Deploy</span>
+        <span class="stage-desc">Deploy on Kubernetes cluster</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project 2 -->
+  <div class="project-card fade-in" style="margin-top:1.5rem">
+    <div class="project-top">
+      <span class="project-num">PROJECT_02</span>
+      <div class="project-links">
+        <a href="https://github.com/abhaysanodiya11/aws-devops-portfolio.git" target="_blank" class="project-link">GitHub ↗</a>
+        <a href="https://dkcn0u4a4132m.cloudfront.net" target="_blank" class="project-link">Live ↗</a>
+      </div>
+    </div>
+    <h3 class="project-title">AWS Static Website with CI/CD</h3>
+    <p class="project-stack">AWS S3 · CloudFront CDN · GitHub Actions · IAM</p>
+    <ul class="project-bullets">
+      <li>Deployed a production-style portfolio on AWS S3 with CloudFront CDN and HTTPS enabled globally.</li>
+      <li>Automated deployments using GitHub Actions — a push to main triggers S3 sync and CloudFront cache invalidation automatically.</li>
+      <li>Configured IAM roles and policies following the least-privilege principle for secure pipeline access.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header fade-in">
+    <span class="section-tag">// 03</span>
+    <div class="section-line"></div>
+  </div>
+  <h2 class="section-title fade-in">About & Contact</h2>
+
+  <div class="contact-grid">
+    <div class="fade-in">
+      <p class="contact-text">
+        I'm a <strong>Computer Applications graduate from Pune</strong> who went deep into DevOps
+        through structured self-study — not just tutorials, but actually building pipelines,
+        breaking things, and fixing them.<br><br>
+        I've gone through the full stack: <strong>Bash → Ansible → Jenkins → Docker → Kubernetes</strong>,
+        and I've built real projects that tie it all together. I'm looking for a role where
+        I can contribute from day one and keep growing fast.
+      </p>
+      <a href="https://pwskills.com/learn/certificate/71df7c7e-eb12-4f8f-888c-76de5c34e00f/?isCareerPath=true"
+         target="_blank" class="cert-badge">
+        <div class="cert-dot"></div>
+        <div class="cert-text"><strong>Certified</strong> — DevOps &amp; Cloud Computing · PW Skills</div>
+      </a>
+    </div>
+    <div class="contact-links fade-in">
+      <a href="mailto:abhaysanodiya000@gmail.com" class="contact-item">
+        <span class="contact-icon">✉️</span>
+        <div>
+          <span class="contact-label">Email</span>
+          <span class="contact-val">abhaysanodiya000@gmail.com</span>
+        </div>
+      </a>
+      <a href="https://github.com/abhaysanodiya11" target="_blank" class="contact-item">
+        <span class="contact-icon">🐙</span>
+        <div>
+          <span class="contact-label">GitHub</span>
+          <span class="contact-val">github.com/abhaysanodiya11</span>
+        </div>
+      </a>
+      <a href="https://www.linkedin.com/in/abhaysanodiya" target="_blank" class="contact-item">
+        <span class="contact-icon">💼</span>
+        <div>
+          <span class="contact-label">LinkedIn</span>
+          <span class="contact-val">linkedin.com/in/abhaysanodiya</span>
+        </div>
+      </a>
+      <a href="https://dkcn0u4a4132m.cloudfront.net" target="_blank" class="contact-item">
+        <span class="contact-icon">☁️</span>
+        <div>
+          <span class="contact-label">AWS Live Site</span>
+          <span class="contact-val">dkcn0u4a4132m.cloudfront.net</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-text">© 2025 <span>Abhay Sanodiya</span> · Deployed on AWS CloudFront</div>
+  <div class="footer-text">Built with HTML · Hosted on S3 · Delivered via <span>CloudFront</span></div>
+</footer>
+
+<script>
+  // Fade-in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Typed role effect
+  const roles = [
+    'DevOps & Cloud Engineer',
+    'Pipeline Automation',
+    'Kubernetes Enthusiast',
+    'CI/CD Builder',
+  ];
+  let ri = 0, ci = 0, deleting = false;
+  const el = document.getElementById('typed-role');
+  function type() {
+    const current = roles[ri];
+    if (!deleting) {
+      el.textContent = current.slice(0, ++ci);
+      if (ci === current.length) { deleting = true; setTimeout(type, 1800); return; }
+    } else {
+      el.textContent = current.slice(0, --ci);
+      if (ci === 0) { deleting = false; ri = (ri + 1) % roles.length; }
+    }
+    setTimeout(type, deleting ? 45 : 75);
+  }
+  type();
+</script>
 </body>
 </html>
