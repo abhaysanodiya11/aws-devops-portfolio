@@ -81,9 +81,6 @@ Whenever code is pushed to the `main` branch:
 aws-devops-portfolio/
 │
 ├── index.html
-├── style.css
-├── script.js
-│
 └── .github/
     └── workflows/
         └── deploy.yml
@@ -100,14 +97,4 @@ aws-devops-portfolio/
 - Infrastructure Deployment
 - DevOps Fundamentals
 
----
-
-# Future Improvements
-
-- Terraform Infrastructure as Code
-- Docker Containerization
-- Automated CloudFront Cache Invalidation
-- Custom Domain Integration
-- Monitoring & Logging
-
----
+* Currently live preview of my AWS-Static-portfolio-website  is not available , AWS free tier Expired. 
